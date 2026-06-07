@@ -353,7 +353,7 @@
 </head>
 <body>
 
-    <div class="toast" id="toastMessage">Nusgalandy / Kopyalandı</div>
+    <div class="toast" id="toastMessage">Nusgalandy!</div>
 
     <header>
         <div class="brand">
@@ -391,12 +391,11 @@
                 heroTitle: "Aksesuar Dükany",
                 heroDesc: "Premium hilli mobil enjamlar we aksesuarlar",
                 copyMsg: "Nusgalandy!",
-                backBtn: "← Izyna, harytlar sanawyna",
+                backBtn: "Izyna, harytlar sanawyna",
                 payTitle: "Bank Töleg Maglumaty",
                 payNotice: "Nusgalamak üçin islendik maglumatyň üstüne basyň.",
                 payTotal: "Müşderi, [PRICE] töleg etmeli.",
                 waBtn: "Sargyt barada habar ber",
-                waMsg: "Salam! Men Uc Dogan dukanyndan asakdaky sargydy etmek isleyarin:%0A%0A*Haryt:* [NAME]%0A*Bahasy:* [PRICE]%0A%0ATolegi etdim. Tassyklamagynyzy sorayaryn.",
                 categories: {
                     telefonlar: { name: "Telefonlar", sub: "Täze modeller", icon: "📱" },
                     kalonkalar: { name: "Kalonkalar", sub: "Güýçli akustika", icon: "🔊" },
@@ -435,12 +434,11 @@
                 heroTitle: "Aksesuar Mağazası",
                 heroDesc: "Premium kalite mobil cihazlar ve aksesuarlar",
                 copyMsg: "Kopyalandı!",
-                backBtn: "← Geri, ürün listesine",
+                backBtn: "Geri, ürün listesine",
                 payTitle: "Banka Ödeme Bilgileri",
                 payNotice: "Kopyalamak için istediğiniz bilginin üzerine tıklayın.",
                 payTotal: "Müşteri, [PRICE] ödeme yapmalıdır.",
                 waBtn: "Siparişi Bildir",
-                waMsg: "Merhaba! Uc Dogan magazanizdan su urunu siparis etmek istiyorum:%0A%0A*Urun:* [NAME]%0A*Fiyat:* [PRICE]%0A%0AOdemeyi gerçekleştirdim. Onaylamanızı rica ederim.",
                 categories: {
                     telefonlar: { name: "Telefonlar", sub: "Yeni modeller", icon: "📱" },
                     kalonkalar: { name: "Hoparlörler", sub: "Güçlü akustik", icon: "🔊" },
@@ -452,26 +450,26 @@
                 },
                 products: {
                     telefonlar: [
-                        { name: "iPhone 15 Pro Max", desc: "256GB Sıfır Kutu", price: "12000 TMT" },
-                        { name: "Samsung S24 Ultra", desc: "512GB Sıfır Kutu", price: "11500 TMT" }
+                        { name: "iPhone 15 Pro Max", desc: "256GB Sifir Kutu", price: "12000 TMT" },
+                        { name: "Samsung S24 Ultra", desc: "512GB Sifir Kutu", price: "11500 TMT" }
                     ],
                     kalonkalar: [
-                        { name: "JBL Flip 6 Premium", desc: "Su geçirmez güçlü ses", price: "480 TMT" }
+                        { name: "JBL Flip 6 Premium", desc: "Su gecirmez guclu ses", price: "480 TMT" }
                     ],
                     sagatlar: [
-                        { name: "Watch Series 9 Ultra", desc: "Tüm fonksiyonlar aktif", price: "550 TMT" }
+                        { name: "Watch Series 9 Ultra", desc: "Tum fonksiyonlar aktif", price: "550 TMT" }
                     ],
                     zaryadniklar: [
-                        { name: "Anker 20W Hızlı Şarj", desc: "Hızlı adaptör", price: "150 TMT" }
+                        { name: "Anker 20W Hizli Sarj", desc: "Hizli adaptoor", price: "150 TMT" }
                     ],
                     udarniklar: [
                         { name: "Green Lion 9H Cam", desc: "Tam ekran koruma", price: "80 TMT" }
                     ],
                     cehollar: [
-                        { name: "iPhone 15 Pro Magsafe Kılıf", desc: "Renkli silikon kılıf", price: "180 TMT" }
+                        { name: "iPhone 15 Pro Magsafe Kilif", desc: "Renkli silikon kilif", price: "180 TMT" }
                     ],
                     nausniklar: [
-                        { name: "AirPods Pro 2", desc: "Yüksek ses ve ANC", price: "450 TMT" }
+                        { name: "AirPods Pro 2", desc: "Yuksek ses ve ANC", price: "450 TMT" }
                     ]
                 }
             }
@@ -479,7 +477,7 @@
 
         let currentLang = "tk";
         let currentCategory = "";
-        const ibanNumber = "TR91 0015 7000 0000 0201 1511 63";
+        const ibanNumber = "TR910015700000000201151163";
         const accountOwner = "AMAN HAYITMURADOV";
         const whatsappNumber = "99364041065";
 
@@ -522,11 +520,11 @@
 
             let bodyHtml = '<div class="list-box">';
             if(prods.length === 0) {
-                bodyHtml += `<p style="text-align:center; color:var(--text-sub); font-size:13px; padding:20px;">Haryt tapylmady / Ürün bulunmadı.</p>`;
+                bodyHtml += `<p style="text-align:center; color:var(--text-sub); font-size:13px; padding:20px;">Haryt tapylmady.</p>`;
             } else {
-                prods.forEach(p => {
+                prods.forEach((p, index) => {
                     bodyHtml += `
-                        <div class="item-row" onclick="openPayment('${p.name.replace(/'/g, "\\'")}', '${p.price}')">
+                        <div class="item-row" onclick="openPayment('${key}', ${index})">
                             <div class="item-info">
                                 <span class="item-title">${p.name}</span>
                                 <span class="item-desc">${p.desc}</span>
@@ -542,17 +540,22 @@
             document.getElementById('appModal').classList.add('open');
         }
 
-        function openPayment(name, price) {
+        function openPayment(catKey, prodIndex) {
             const langData = localization[currentLang];
+            const prod = langData.products[catKey][prodIndex];
             
             let payBoxHtml = `
                 <div class="info-card">
                     <span style="font-size:12px; font-weight:700; color:var(--gold); text-transform:uppercase;">${langData.payTitle}</span>
-                    <div class="info-row" onclick="copyText('${accountOwner}')">Eýesi / Alıcı: ${accountOwner}</div>
-                    <div class="info-row" onclick="copyText('${ibanNumber.replace(/\s/g, "")}')" style="letter-spacing:1px; font-size:13px;">${ibanNumber}</div>
+                    <div class="info-row" onclick="copyText('${accountOwner}')">Eýesi: ${accountOwner}</div>
+                    <div class="info-row" onclick="copyText('${ibanNumber}')" style="letter-spacing:1px; font-size:13px;">${ibanNumber}</div>
                     <p style="font-size:11px; color:var(--text-sub); text-align:center; margin-top:10px;">${langData.payNotice}</p>
                 </div>
                 
                 <div class="price-banner">
-                    ${langData.payTotal.replace('[PRICE]', price)}
-                </d
+                    ${langData.payTotal.replace('[PRICE]', prod.price)}
+                </div>
+
+                <button class="action-btn" onclick="sendOrder('${prod.name}', '${prod.price}')">
+                    <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor;">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.966 0c3.184.001 6.177 1.239 8.426 3.49s3.486 5.244 3.486 8.428c
